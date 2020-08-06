@@ -4,11 +4,8 @@ function pipe(...fns) {
         return others.reduce((val, fn) => fn(val), first(...x));
     };
 }
-function pipeWith(val, ...fns) {
-    if (typeof val === 'function') {
-        return pipe(...fns)();
-    }
-    return pipe(...fns)(val);
+function pipeWith(...fns) {
+    return pipe(...fns)();
 }
 
 const map = (f) => (iter) => {
@@ -51,6 +48,12 @@ const products = [
 const getPrice = (a) => a.price;
 const exceptPhoneCase = (a) => a.name !== '핸드폰케이스';
 const add = (a, b) => a + b;
+const addPrice = (a) => reduce(add)(a);
 
-const total_price = pipeWith(products, filter(exceptPhoneCase), map(getPrice), reduce(add));
+const total_price = pipeWith(
+    () => products,
+    filter(exceptPhoneCase),
+    map(getPrice),
+    addPrice,
+);
 console.log(total_price);
