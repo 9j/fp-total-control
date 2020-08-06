@@ -48,12 +48,7 @@ const products = [
 const getPrice = (a) => a.price;
 const exceptPhoneCase = (a) => a.name !== '핸드폰케이스';
 const add = (a, b) => a + b;
-const addPrice = (a) => reduce(add)(a);
+const getTotalPrice = (a) => reduce(add)(a);
 
-const total_price = pipeWith(
-    () => products,
-    filter(exceptPhoneCase),
-    map(getPrice),
-    addPrice,
-);
+const total_price = pipeWith(() => products, filter(exceptPhoneCase), map(getPrice), getTotalPrice);
 console.log(total_price);
